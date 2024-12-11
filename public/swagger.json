@@ -1,0 +1,153 @@
+{
+	"swagger":"2.0",
+	"info":{
+		"description":"Welcome to the online developer documentation of NIDOMA REST API Service.",
+		"version":"1.0",
+		"title":"NIDOMA REST API",
+		"termsOfService":"",
+		"contact":{
+			"email":"leonardo.alia@yahoo.it"
+		},
+		"license":{
+			"name":"Nidoma License","url":"https://nidoma.com/"
+		}
+	},
+	"basePath":"/api",
+	"tags":[{
+		"name":"whois",
+		"description":"Whois related calls"
+	}],
+	"schemes":["http"],
+	"paths":{
+		"/whois/{sld}/{tld}":{
+			"get":{
+				"tags":["whois"],
+				"summary":"Get whois info",
+				"description":"Return all info about domain passed as parameter",
+				"operationId":"getWhoisInfo",
+				"produces":["application/json"],
+				"parameters":[{
+					"name":"sld",
+					"in":"path",
+					"description":"Second Level Domain name<br /><br /><u>Constraints:</u><i><ul><li>may not be null</li></ul></i>",
+					"required":true,
+					"type":"string"
+				},{
+					"name":"tld",
+					"in":"path",
+					"description":"Top Level Domain name<br /><br /><u>Constraints:</u><i><ul><li>may not be null</li></ul></i>",
+					"required":true,
+					"type":"string"
+				}],"responses":{
+					"200":{
+						"description":"Whois information retrieved successfully.",
+						"schema":{
+							"$ref":"#/definitions/whoisResponse"
+						}
+					},"400":{
+						"description":"Validation errors",
+						"schema":{"$ref":"#/definitions/error"}
+					},"404":{
+						"description":"Not found errors",
+						"schema":{"$ref":"#/definitions/error"}
+					},"500":{
+						"description":"Internal server errors",
+						"schema":{"$ref":"#/definitions/error"}
+					}
+				}
+			}
+		}
+	},"definitions":{
+		"error":{
+			"type":"object",
+			"required":["status","error"],
+			"properties":{
+				"status":{
+					"type":"integer",
+					"format":"int32",
+					"description":"Error code"
+				},"error":{
+					"type":"string",
+					"description":"Error description"
+				}
+			}
+		},"whoisResponse":{
+			"type":"object",
+			"required":["domain","registrar","registrant","administrative","technical"],
+			"properties":{
+				"domain":{"$ref":"#/definitions/domainObj"},
+				"registrar":{"$ref":"#/definitions/registrarObj"},
+				"registrant":{"$ref":"#/definitions/organizationObj"},
+				"administrative":{"$ref":"#/definitions/organizationObj"},
+				"technical":{"$ref":"#/definitions/organizationObj"}
+			}
+		},"domainObj":{
+			"type":"object",
+			"required":["id","domain"],
+			"properties":{
+				"id":{"type":"string"},
+				"domain":{"type":"string"},
+				"punycode":{"type":"string"},
+				"name":{"type":"string"},
+				"extension":{"type":"string"},
+				"whois_server":{"type":"string"},
+				"status":{"type":"array"},
+				"name_servers":{"type":"array"},
+				"created_date":{"type":"string","format":"date-time","description":"The format is ISO-8601 compliant ('yyyy-MM-ddTHH:mm:ss.SSSZ')"},
+				"created_date_in_time":{"type":"string","format":"date-time","description":"The format is ISO-8601 compliant ('yyyy-MM-ddTHH:mm:ss.SSSZ')"},
+				"updated_date":{"type":"string","format":"date-time","description":"The format is ISO-8601 compliant ('yyyy-MM-ddTHH:mm:ss.SSSZ')"},
+				"updated_date_in_time":{"type":"string","format":"date-time","description":"The format is ISO-8601 compliant ('yyyy-MM-ddTHH:mm:ss.SSSZ')"},
+				"expiration_date":{"type":"string","format":"date-time","description":"The format is ISO-8601 compliant ('yyyy-MM-ddTHH:mm:ss.SSSZ')"},
+				"expiration_date_in_time":{"type":"string","format":"date-time","description":"The format is ISO-8601 compliant ('yyyy-MM-ddTHH:mm:ss.SSSZ')"},
+			}
+		},"registrarObj":{
+			"type":"object",
+			"required":["id","name"],
+			"properties":{
+				"id":{
+					"type":"string",
+					"description":"Registrar name"
+				},
+				"name":{
+					"type":"string",
+					"description":"Registrar name"
+				},
+				"phone":{
+					"type":"string",
+					"description":"Organization contact phone"
+				},
+				"email":{
+					"type":"string",
+					"description":"Organization contact email"
+				},
+				"referral_url":{
+					"type":"string",
+					"description":"Organization web site url"
+				}
+			}
+		},"organizationObj":{
+			"type":"object",
+			"required":["organization"],
+			"properties":{
+				"organization":{
+					"type":"string",
+					"description":"Organization name"
+				},
+				"province":{
+					"type":"string",
+					"description":"Organization province"
+				},
+				"country":{
+					"type":"string",
+					"description":"Organization country"
+				},
+				"email":{
+					"type":"string",
+					"description":"Organization contact email"
+				}
+			}
+		}
+	},"externalDocs":{
+		"description":"","url":""
+	}
+}
