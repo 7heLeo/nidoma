@@ -8,7 +8,7 @@ L'API dev'essere realizzata in PHP ed esporre i dati in format JSON. Il servizio
 - DOCKER 27.3.1
 
 ##
-API DOCUMENTATION: http://localhost:8000/
+API DOCUMENTATION: http://localhost:8000/ (o comunque la root index del servizio)
 ##
 API TEST: RUN > php artisan test --env=testing
 
